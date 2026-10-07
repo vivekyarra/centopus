@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      # Fail fast if package.json and the committed lockfile drift.
       - run: npm ci
       - name: npm security audit
         run: npm audit --audit-level=high
