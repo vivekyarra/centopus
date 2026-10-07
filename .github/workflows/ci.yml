@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - feat/**
+      - fix/**
+      - chore/**
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    name: Node quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: npm security audit
+        run: npm audit --audit-level=high
+      - run: npm run check
+      - run: npm run infra:synth
+      - run: npx playwright-core install --with-deps chromium
+      - run: npm run test:browser
+
+  nova-worker:
+    name: Nova worker SDK + contract tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/nova-worker/requirements.txt
+      - run: python -m pip install --disable-pip-version-check -r services/nova-worker/requirements.txt
+      - run: python -m pip check
+      - run: python -m pip install --disable-pip-version-check pip-audit==2.10.1
+      # Audit the complete installed environment, including transitive dependencies.
+      - run: python -m pip_audit --local
+      - run: python -m compileall services/nova-worker
+      - run: python services/nova-worker/verify_sdk.py
+      - run: python -m unittest discover -s services/nova-worker -p "test_*.py"
+      - run: python services/nova-worker/worker.py --plan-file services/nova-worker/plan.example.json --validate-only

@@ -1,0 +1,195 @@
+.centopus-reaction-wait {
+  width: 100%;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(30, 77, 186, .08), transparent 27rem),
+    #07070a;
+  color: #f4f4f8;
+}
+
+.centopus-reaction-center {
+  width: min(760px, 100%);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.centopus-reaction-grid {
+  width: 112px;
+  display: grid;
+  grid-template-columns: repeat(5, 12px);
+  justify-content: center;
+  gap: 8px 10px;
+  margin-bottom: 36px;
+}
+
+.centopus-reaction-grid span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1f55a4;
+  box-shadow: 0 0 12px rgba(44, 111, 220, .22);
+  animation: centopus-reaction-dot 1.8s ease-in-out infinite;
+}
+
+.centopus-reaction-grid span:nth-child(3n) { animation-delay: .2s; }
+.centopus-reaction-grid span:nth-child(4n) { animation-delay: .4s; }
+
+.centopus-reaction-grid span.active,
+.centopus-reaction-grid span.provisioning {
+  background: #347df1;
+  box-shadow: 0 0 18px rgba(52, 125, 241, .55);
+}
+
+.centopus-reaction-grid span.completed {
+  background: #5c8fd9;
+}
+
+.centopus-reaction-grid span.failed,
+.centopus-reaction-grid span.timed_out,
+.centopus-reaction-grid span.abandoned,
+.centopus-reaction-grid span.cancelled {
+  background: #343746;
+  box-shadow: none;
+}
+
+@keyframes centopus-reaction-dot {
+  0%, 100% { opacity: .55; transform: scale(.94); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.centopus-reaction-timeline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 34px;
+}
+
+.centopus-reaction-timeline span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #262735;
+  border: 1px solid #383a4b;
+}
+
+.centopus-reaction-timeline span.done {
+  width: 8px;
+  height: 8px;
+  background: #2456a0;
+  border-color: #2456a0;
+}
+
+.centopus-reaction-timeline span.active {
+  width: 13px;
+  height: 13px;
+  background: #347df1;
+  border-color: #6ea4ff;
+  box-shadow: 0 0 16px rgba(52, 125, 241, .65);
+}
+
+.centopus-reaction-timeline i {
+  width: 42px;
+  height: 2px;
+  margin: 0 9px;
+  background: #222532;
+}
+
+.centopus-reaction-timeline i:first-of-type {
+  background: linear-gradient(90deg, #285a9f, #347df1);
+}
+
+.centopus-reaction-wait h1 {
+  margin: 0;
+  color: #f5f5f8;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  font-weight: 620;
+}
+
+.centopus-reaction-copy {
+  max-width: 690px;
+  margin: 14px 0 0;
+  color: #787b87;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.centopus-reaction-pill {
+  min-width: min(420px, 86vw);
+  margin-top: 30px;
+  padding: 10px 18px;
+  border: 1px solid #252733;
+  border-radius: 999px;
+  background: rgba(10, 10, 14, .72);
+  color: #777b89;
+  font-size: 11px;
+}
+
+.centopus-reaction-progress {
+  width: min(420px, 86vw);
+  height: 3px;
+  margin-top: 11px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #161922;
+}
+
+.centopus-reaction-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #347df1;
+  box-shadow: 0 0 12px rgba(52, 125, 241, .5);
+  transition: width .5s ease;
+}
+
+.centopus-reaction-note {
+  margin: 12px 0 0;
+  color: #454954;
+  font-size: 10px;
+}
+
+.centopus-reaction-error {
+  margin: 18px 0 0;
+  color: #d98c8c;
+  font-size: 10px;
+}
+
+.centopus-reaction-results {
+  margin-top: 20px;
+  color: #76a7ff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 620px) {
+  .centopus-reaction-wait {
+    padding: 20px;
+  }
+
+  .centopus-reaction-grid {
+    margin-bottom: 28px;
+  }
+
+  .centopus-reaction-timeline i {
+    width: 30px;
+    margin-inline: 6px;
+  }
+
+  .centopus-reaction-copy {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .centopus-reaction-grid span {
+    animation: none !important;
+  }
+}
