@@ -28,7 +28,7 @@ jobs:
       # Fail fast if package.json and the committed lockfile drift.
       - run: npm ci
       - name: npm security audit
-        run: npm audit --audit-level=high
+        run: node scripts/audit-node.mjs
       - run: npm run check
       - run: npm run infra:synth
       - run: npx playwright-core install --with-deps chromium
