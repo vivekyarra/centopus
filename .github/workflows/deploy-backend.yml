@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: vars.ENABLE_AWS_DEPLOYMENT == 'true'
+    if: vars.ENABLE_AWS_DEPLOYMENT != 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
